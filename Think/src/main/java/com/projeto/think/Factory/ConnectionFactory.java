@@ -6,25 +6,24 @@ import java.sql.SQLException;
 
 import org.springframework.beans.factory.annotation.Value;
 
-
 public class ConnectionFactory
 {
-	@Value("#{contextProperties['database.code']}")
+	@Value("#{configProperties['database.code']}")
 	private static String code;
 	
-	@Value("#{contextProperties['database.host']}")
+	@Value("#{configProperties['database.host']}")
 	private static String host;
 	
-	@Value("#{contextProperties['database.name']}")
+	@Value("#{configProperties['database.name']}")
 	private static String database;
 	
-	@Value("#{contextProperties['database.user']}")
+	@Value("#{configProperties['database.user']}")
 	private static String user;
 	
-	@Value("#{contextProperties['database.password']}")
+	@Value("#{configProperties['database.password']}")
 	private static String password;
 	
-	@Value("#{contextProperties['database.driver']}")
+	@Value("#{configProperties['database.driver']}")
 	private static String driver;
 	
 	static
@@ -42,6 +41,12 @@ public class ConnectionFactory
 	public static Connection getConnection() throws SQLException
 	{
 		return DriverManager.getConnection(
+				"jdbc:" + code + "://" + host + "/" + database + "?user=" + user + "&password=" + password );
+	}
+	
+	public static void printURL()
+	{
+		System.out.println(
 				"jdbc:" + code + "://" + host + "/" + database + "?user=" + user + "&password=" + password );
 	}
 	

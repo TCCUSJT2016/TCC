@@ -3,10 +3,13 @@ package com.projeto.think.Service.impl;
 import java.util.List;
 import java.util.Map;
 
+import com.projeto.think.Repository.impl.EmpresaDAO;
 import com.projeto.think.Service.IService;
 
-public class EmpresaService implements IService {
-
+public class EmpresaService implements IService
+{
+	private EmpresaDAO empresaDAO = new EmpresaDAO();
+	
 	public Map<String, Object> cadastrar(Object object) {
 		// TODO Auto-generated method stub
 		return null;

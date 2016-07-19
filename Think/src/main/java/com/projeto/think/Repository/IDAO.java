@@ -1,7 +1,8 @@
 package com.projeto.think.Repository;
 
-import java.util.List;
 import java.util.Map;
+
+import com.projeto.think.TO.IObjectTO;
 
 public interface IDAO {
 	
@@ -9,15 +10,9 @@ public interface IDAO {
 	
 	public Map<String, Object> consultar();
 	
-	public Map<String, Object> cadastrar(Object object);
-
-	public Map<String, Object> cadastrar(List<Object> object);
+	public Map<String, Object> cadastrar(IObjectTO objectTO);
 	
-	public Map<String, Object> alterar(Object object);
-		
-	public Map<String, Object> alterar(List<Object> objects);
+	public Map<String, Object> alterar(IObjectTO objectTO);
 	
-	public Map<String, Object> excluir(Object object);
-	
-	public Map<String, Object> excluir(List<Object> objects);
+	public Map<String, Object> excluir(IObjectTO objectTO);
 }

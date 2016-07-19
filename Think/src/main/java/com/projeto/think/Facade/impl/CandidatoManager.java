@@ -5,7 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.stereotype.Component;
 
 import com.projeto.think.Facade.IManager;
 import com.projeto.think.Model.Candidato;
@@ -20,26 +21,15 @@ import com.projeto.think.Service.impl.DepartamentoService;
 import com.projeto.think.Service.impl.EmpresaService;
 import com.projeto.think.Service.impl.NivelCandidatoService;
 
-
-public class CandidatoManager implements IManager{
-
-	@Autowired
-	private UsuarioService usuarioService;
-	
-	@Autowired
-	private CandidatoService candidatoService;
-	
-	@Autowired
-	private DepartamentoService departamentoService;
-	
-	@Autowired
-	private CargoService cargoService;
-	
-	@Autowired
-	private NivelCandidatoService nivelCandidatoService;
-	
-	@Autowired
-	private EmpresaService empresaService;
+@Component
+public class CandidatoManager implements IManager
+{
+	private UsuarioService usuarioService = new UsuarioService();
+	private CandidatoService candidatoService = new CandidatoService();
+	private DepartamentoService departamentoService = new DepartamentoService();
+	private CargoService cargoService = new CargoService();
+	private NivelCandidatoService nivelCandidatoService = new NivelCandidatoService();
+	private EmpresaService empresaService = new EmpresaService();
 	
 	private Logger logger = Logger.getLogger(CandidatoManager.class);
 	
@@ -122,6 +112,7 @@ public class CandidatoManager implements IManager{
 										 				grauEscolaridade, cargo, empresa, null, departamento, nivelCandidato);
 			
 
+				
 				try
 				{
 					logger.info("[Projeto THINK]: Cadastrar Candidato - Cadastrando candidato...");

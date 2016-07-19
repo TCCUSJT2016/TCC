@@ -9,15 +9,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.projeto.think.Facade.IManager;
-
+import com.projeto.think.Facade.impl.CandidatoManager;
 
 @Controller
 @RequestMapping("think/candidato")
 public class CandidatoController
 {
-	@Autowired
-	private IManager manager;
+	private CandidatoManager candidatoManager = new CandidatoManager();
 	
 	@RequestMapping("/consultar.do")
 	public String consultarCandidato( @RequestParam("id")	 				int id,
@@ -90,7 +88,7 @@ public class CandidatoController
 		
 		try
 		{
-			boolean sucesso = manager.cadastrar(params);
+			boolean sucesso = candidatoManager.cadastrar(params);
 			
 			if(sucesso)
 			{

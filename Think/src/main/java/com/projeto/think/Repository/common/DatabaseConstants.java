@@ -21,13 +21,21 @@ public abstract class DatabaseConstants {
 	protected static final String SPACE				= " ";
 	protected static final String QUERY_END			= ";";
 	protected static final String PARAMETER_SIGN	= "?";
+	protected static final String EQUALS_SIGN		= "=";
 	
 	protected static final String FROM		 		= "FROM";
+	protected static final String WHERE		 		= "WHERE";
 	protected static final String VALUES	 		= "VALUES";
 	protected static final String ORDER_BY	 		= "ORDER BY";
 	protected static final String ASC		 		= "ASC";
 	protected static final String DESC		 		= "DESC";
 	
+	
+	public String getSelectOne(String table_name, String fieldToSelect, String filterColumn)
+	{
+		return SELECT + SPACE + fieldToSelect + SPACE + FROM + SPACE + table_name +
+			   WHERE  + SPACE + filterColumn + SPACE + EQUALS_SIGN + PARAMETER_SIGN;
+	}
 	
 	public String getSelectAllQuery(String table_name)
 	{

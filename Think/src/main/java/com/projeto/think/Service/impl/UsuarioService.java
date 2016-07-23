@@ -16,13 +16,13 @@ import com.projeto.think.Common.Criptografia.Criptografia;
 import com.projeto.think.Model.Candidato;
 import com.projeto.think.Repository.impl.UsuarioDAO;
 import com.projeto.think.Service.IService;
+import com.projeto.think.TO.IObjectTO;
 import com.projeto.think.TO.impl.CandidatoTO;
 
 @Service
 public class UsuarioService implements IService
 {
 	private UsuarioDAO usuarioDAO = new UsuarioDAO();
-
 	private CandidatoTO candidatoTO = new CandidatoTO();
 	
 	public Map<String, Object> cadastrar(Object usuario)
@@ -50,11 +50,6 @@ public class UsuarioService implements IService
 	{
 		return false;
 	}
-	
-	public Map<String, Object> consultarPorId(int id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	public String criptografar(String item) throws  InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException,
 													InvalidAlgorithmParameterException, IllegalBlockSizeException,
@@ -64,4 +59,33 @@ public class UsuarioService implements IService
 		return criptografia.criptografar(item);
 	}
 
+
+	public Map<String, Object> cadastrar(IObjectTO objectTO) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	public Map<String, Object> alterar(IObjectTO objectTO) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	public Map<String, Object> excluir(IObjectTO objectTO) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	public Map<String, Object> consultarPorId(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	public Map<String, Object> consultar() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

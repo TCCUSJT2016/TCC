@@ -30,7 +30,8 @@ public class ConnectionFactory
 	{
 		try
 		{
-			Class.forName(driver);
+			//Class.forName(driver);
+			Class.forName("com.mysql.jdbc.Driver");
 		}
 		catch(ClassNotFoundException e)
 		{
@@ -40,8 +41,10 @@ public class ConnectionFactory
 	
 	public static Connection getConnection() throws SQLException
 	{
-		return DriverManager.getConnection(
-				"jdbc:" + code + "://" + host + "/" + database + "?user=" + user + "&password=" + password );
+		//return DriverManager.getConnection(
+				//"jdbc:" + code + "://" + host + "/" + database + "?user=" + user + "&password=" + password );
+		return DriverManager
+				.getConnection("jdbc:mysql://localhost:3306/TCC?user=root&password=root");
 	}
 	
 	public static void printURL()

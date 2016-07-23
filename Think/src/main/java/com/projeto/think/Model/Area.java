@@ -15,4 +15,8 @@ public class Area extends Item implements Serializable {
 	{
 		super(id, descricao);
 	}
+	
+	public Area(int id) {
+		super(id, null);
+	}
 }

@@ -19,6 +19,10 @@ public class Subcategoria extends Item implements Serializable {
 		this.setCategoria(categoria);
 	}
 	
+	public Subcategoria(int id) {
+		super(id, null);
+	}
+	
 	public Categoria getCategoria() {
 		return categoria;
 	}

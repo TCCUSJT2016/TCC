@@ -4,8 +4,8 @@ package com.projeto.think.Repository.common;
 /**
  * 
  * @author Mauricio Souza Couto
- * Está classe abstrata tem por objetivo gerar as queries que serão utilizadas na persistência com o banco de dados.
- * Está classe deve ser herdada por todos os DAOs.
+ * Estï¿½ classe abstrata tem por objetivo gerar as queries que serï¿½o utilizadas na persistï¿½ncia com o banco de dados.
+ * Estï¿½ classe deve ser herdada por todos os DAOs.
  */
 public abstract class DatabaseConstants {
 	
@@ -29,12 +29,31 @@ public abstract class DatabaseConstants {
 	protected static final String ORDER_BY	 		= "ORDER BY";
 	protected static final String ASC		 		= "ASC";
 	protected static final String DESC		 		= "DESC";
+	protected static final String SET		 		= "SET";
 	
 	
 	public String getSelectOne(String table_name, String fieldToSelect, String filterColumn)
 	{
 		return SELECT + SPACE + fieldToSelect + SPACE + FROM + SPACE + table_name +
-			   WHERE  + SPACE + filterColumn + SPACE + EQUALS_SIGN + PARAMETER_SIGN;
+			   SPACE + WHERE  + SPACE + filterColumn + SPACE + EQUALS_SIGN + PARAMETER_SIGN;
+	}
+	
+	public String getSelectOne(String table_name, String[] fields, String filterColumn)
+	{
+		String fieldsQuery = "";
+		
+		for(int i = 0; i < fields.length; i++)
+		{
+			fieldsQuery  += fields[i];
+			
+			if(i != fields.length - 1)
+			{
+				fieldsQuery  += COLUMNS_SEPARATOR + SPACE;
+			}
+		}
+		
+		return SELECT + SPACE + fieldsQuery + SPACE + FROM + SPACE + table_name +
+			   SPACE + WHERE  + SPACE + filterColumn + SPACE + EQUALS_SIGN + PARAMETER_SIGN;
 	}
 	
 	public String getSelectAllQuery(String table_name)
@@ -95,5 +114,32 @@ public abstract class DatabaseConstants {
 			   OPEN_PARENTHESIS +
 			   		fieldsValues +
 			   CLOSE_PARENTHESIS;
+	}
+	
+	public String getDeleteQuery(String table_name, String filterColumn) {
+		return DELETE + SPACE + FROM + SPACE + table_name + SPACE + 
+			   WHERE + SPACE + filterColumn + SPACE + EQUALS_SIGN + SPACE + PARAMETER_SIGN;
+	}
+	
+	public String getUpdateQuery(String table_name, String[] fields, String filterColumn) {
+		
+		String fieldsQuery = "";
+		
+		for(int i = 0; i < fields.length; i++)
+		{
+			fieldsQuery  += fields[i]; 
+			
+			if(i != fields.length - 1)
+			{
+				fieldsQuery  += SPACE + EQUALS_SIGN + SPACE + PARAMETER_SIGN + COLUMNS_SEPARATOR;
+			}
+			else {
+				fieldsQuery  += SPACE + EQUALS_SIGN + SPACE + PARAMETER_SIGN;
+			}
+		}
+		
+		return UPDATE + SPACE + table_name + SPACE + 
+			   SET + SPACE + fieldsQuery + SPACE + 
+			   WHERE + SPACE + filterColumn + SPACE + EQUALS_SIGN + SPACE + PARAMETER_SIGN;
 	}
 }

@@ -15,4 +15,8 @@ public class NivelPergunta extends Item implements Serializable{
 	{
 		super(id, descricao);
 	}
+	
+	public NivelPergunta(int id) {
+		super(id, null);
+	}
 }

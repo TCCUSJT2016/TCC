@@ -19,6 +19,10 @@ public class Categoria extends Item implements Serializable {
 		this.setArea(area);
 	}
 	
+	public Categoria(int id) {
+		super(id, null);
+	}
+	
 	public Area getArea() {
 		return area;
 	}

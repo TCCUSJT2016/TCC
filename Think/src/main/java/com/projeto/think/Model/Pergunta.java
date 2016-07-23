@@ -1,9 +1,12 @@
 package com.projeto.think.Model;
 
+import java.sql.Time;
+
 public class Pergunta extends Item {
 	
 	private int  pontuacao;
-	private long tempoResposta;
+	private Time tempoResposta;
+	private NivelPergunta nivelPergunta;
 	private Area area;
 	private Categoria categoria;
 	private Subcategoria subcategoria;
@@ -13,12 +16,17 @@ public class Pergunta extends Item {
 		super();
 	}
 	
-	public Pergunta(int id, String descricao, int pontuacao, long tempoResposta, Area area, Categoria categoria, Subcategoria subcategoria)
+	public Pergunta(int id) {
+		super(id, null);
+	}
+	
+	public Pergunta(int id, String descricao, int pontuacao, Time tempoResposta, NivelPergunta nivelPergunta, Area area, Categoria categoria, Subcategoria subcategoria)
 	{
 		super(id, descricao);
 		
 		this.setPontuacao(pontuacao);
 		this.setTempoResposta(tempoResposta);
+		this.setNivelPergunta(nivelPergunta);
 		this.setArea(area);
 		this.setCategoria(categoria);
 		this.setSubcategoria(subcategoria);
@@ -32,12 +40,20 @@ public class Pergunta extends Item {
 		this.pontuacao = pontuacao;
 	}
 
-	public long getTempoResposta() {
+	public Time getTempoResposta() {
 		return tempoResposta;
 	}
 
-	public void setTempoResposta(long tempoResposta) {
-		this.tempoResposta = tempoResposta;
+	public void setTempoResposta(Time time) {
+		this.tempoResposta = time;
+	}
+	
+	public NivelPergunta getNivelPergunta() {
+		return nivelPergunta;
+	}
+	
+	public void setNivelPergunta(NivelPergunta nivelPergunta) {
+		this.nivelPergunta = nivelPergunta;
 	}
 
 	public Area getArea() {

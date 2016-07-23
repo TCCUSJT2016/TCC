@@ -1,24 +1,29 @@
 package com.projeto.think.Service.impl;
 
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
 import com.projeto.think.Repository.impl.CandidatoDAO;
 import com.projeto.think.Service.IService;
+import com.projeto.think.TO.IObjectTO;
 
 @Component
 public class CandidatoService implements IService
 {
 	private CandidatoDAO candidatoDAO = new CandidatoDAO();
-	
-	public Map<String, Object> cadastrar(Object object) {
+
+	public Map<String, Object> cadastrar(IObjectTO objectTO) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public Map<String, Object> cadastrar(List<Object> objects) {
+	public Map<String, Object> alterar(IObjectTO objectTO) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Map<String, Object> excluir(IObjectTO objectTO) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -27,5 +32,11 @@ public class CandidatoService implements IService
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	public Map<String, Object> consultar() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 
 }

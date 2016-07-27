@@ -16,6 +16,7 @@ import com.mysql.jdbc.Statement;
 import com.projeto.think.Factory.ConnectionFactory;
 import com.projeto.think.Model.Area;
 import com.projeto.think.Model.Categoria;
+import com.projeto.think.Model.Desafio;
 import com.projeto.think.Model.NivelPergunta;
 import com.projeto.think.Model.Pergunta;
 import com.projeto.think.Model.Subcategoria;
@@ -52,8 +53,9 @@ public class PerguntaDAO extends DatabaseConstants implements IDAO {
 		String query = super.getSelectOne(TABLE_NAME_PERGUNTA, fields, COLUMN_ID_PERGUNTA);
 
 		try {
+			Pergunta p = null;
+			
 			resultado = new HashMap<String, Object>();
-			lista = new ArrayList<Object>();
 
 			connection = ConnectionFactory.getConnection();
 			statement = connection.prepareStatement(query);
@@ -64,7 +66,7 @@ public class PerguntaDAO extends DatabaseConstants implements IDAO {
 				rs = statement.executeQuery();
 
 				while (rs.next()) {
-					Pergunta p = new Pergunta();
+					p = new Pergunta();
 
 					p.setId(rs.getInt(COLUMN_ID_PERGUNTA));
 					p.setDescricao(rs.getString(COLUMN_DESCRICAO));
@@ -74,15 +76,13 @@ public class PerguntaDAO extends DatabaseConstants implements IDAO {
 					p.setArea(new Area(rs.getInt(COLUMN_ID_AREA), null));
 					p.setCategoria(new Categoria(rs.getInt(COLUMN_ID_CATEGORIA), null, new Area(rs.getInt(COLUMN_ID_AREA), null)));
 					p.setSubcategoria(new Subcategoria(rs.getInt(COLUMN_ID_SUBCATEGORIA), null, new Categoria(rs.getInt(COLUMN_ID_CATEGORIA), null, new Area(rs.getInt(COLUMN_ID_AREA), null))));
-
-					lista.add(p);
 				}
-				resultado.put("lista", lista);
-				resultado.put("statusOperacao", "true");
+				resultado.put("pergunta", p);
+				resultado.put("statusOperacao", true);
 
 			} catch (Exception e) {
 				connection.rollback();
-				resultado.put("statusOperacao", "false");
+				resultado.put("statusOperacao", false);
 				
 			}
 
@@ -91,7 +91,7 @@ public class PerguntaDAO extends DatabaseConstants implements IDAO {
 			
 			try {
 				connection.rollback();
-				resultado.put("statusOperacao", "false");
+				resultado.put("statusOperacao", false);
 				
 			} catch (SQLException s) {
 				s.printStackTrace();
@@ -187,10 +187,12 @@ public class PerguntaDAO extends DatabaseConstants implements IDAO {
 
 		for (int i = 0; i < objectTO.consultar().size(); i++) {
 
-			Pergunta p = (Pergunta) objectTO.consultar().get(i);
+			Desafio d = (Desafio) objectTO.consultar().get(i);
 
-			if (p instanceof Pergunta) {
+			if (d instanceof Desafio) {
 
+				Pergunta p = d.getPergunta();
+				
 				try {
 					resultado = new HashMap<String, Object>();
 
@@ -216,11 +218,11 @@ public class PerguntaDAO extends DatabaseConstants implements IDAO {
 						}
 								
 						resultado.put("idPergunta", idPergunta);
-						resultado.put("statusOperacao", "true");
+						resultado.put("statusOperacao", true);
 
 					} catch (Exception e) {
 						connection.rollback();
-						resultado.put("statusOperacao", "false");
+						resultado.put("statusOperacao", false);
 						
 					}
 					
@@ -229,7 +231,7 @@ public class PerguntaDAO extends DatabaseConstants implements IDAO {
 					
 					try {
 						connection.rollback();
-						resultado.put("statusOperacao", "false");
+						resultado.put("statusOperacao", false);
 						
 					} catch (SQLException s) {
 						s.printStackTrace();
@@ -262,10 +264,12 @@ public class PerguntaDAO extends DatabaseConstants implements IDAO {
 
 		for (int i = 0; i < objectTO.consultar().size(); i++) {
 
-			Pergunta p = (Pergunta) objectTO.consultar().get(i);
+			Desafio d = (Desafio) objectTO.consultar().get(i);
 
-			if (p instanceof Pergunta) {
+			if (d instanceof Desafio) {
 
+				Pergunta p = d.getPergunta();
+				
 				try {
 					resultado = new HashMap<String, Object>();
 
@@ -285,14 +289,14 @@ public class PerguntaDAO extends DatabaseConstants implements IDAO {
 					try {
 						statement.execute();
 						
-						int idPergunta = this.getIdPergunta(p.getId());
+						int idPergunta = p.getId();
 						
 						resultado.put("idPergunta", idPergunta);
-						resultado.put("statusOperacao", "true");
+						resultado.put("statusOperacao", true);
 						
 					} catch (Exception e) {
 						connection.rollback();
-						resultado.put("statusOperacao", "false");
+						resultado.put("statusOperacao", false);
 						
 					}
 					
@@ -301,7 +305,7 @@ public class PerguntaDAO extends DatabaseConstants implements IDAO {
 					
 					try {
 						connection.rollback();
-						resultado.put("statusOperacao", "false");
+						resultado.put("statusOperacao", false);
 						
 					} catch (SQLException s) {
 						s.printStackTrace();
@@ -331,10 +335,12 @@ public class PerguntaDAO extends DatabaseConstants implements IDAO {
 
 		for (int i = 0; i < objectTO.consultar().size(); i++) {
 
-			Pergunta p = (Pergunta) objectTO.consultar().get(i);
+			Desafio d = (Desafio) objectTO.consultar().get(i);
 
-			if (p instanceof Pergunta) {
+			if (d instanceof Desafio) {
 
+				Pergunta p = d.getPergunta();
+				
 				try {
 					resultado = new HashMap<String, Object>();
 					
@@ -346,14 +352,11 @@ public class PerguntaDAO extends DatabaseConstants implements IDAO {
 					try {
 						statement.execute();
 						
-						int idPergunta = this.getIdPergunta(p.getId());
-						
-						resultado.put("idPergunta", idPergunta);
-						resultado.put("statusOperacao", "true");
+						resultado.put("statusOperacao", true);
 						
 					} catch (Exception e) {
 						connection.rollback();
-						resultado.put("statusOperacao", "false");
+						resultado.put("statusOperacao", false);
 					}
 					
 				} catch (Exception e) {
@@ -361,7 +364,7 @@ public class PerguntaDAO extends DatabaseConstants implements IDAO {
 					
 					try {
 						connection.rollback();
-						resultado.put("statusOperacao", "false");
+						resultado.put("statusOperacao", false);
 						
 					} catch (SQLException s) {
 						s.printStackTrace();

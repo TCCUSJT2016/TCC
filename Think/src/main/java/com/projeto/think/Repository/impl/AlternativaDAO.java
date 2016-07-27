@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import com.mysql.jdbc.Statement;
 import com.projeto.think.Factory.ConnectionFactory;
 import com.projeto.think.Model.Alternativa;
+import com.projeto.think.Model.Desafio;
 import com.projeto.think.Model.Pergunta;
 import com.projeto.think.Repository.IDAO;
 import com.projeto.think.Repository.common.DatabaseConstants;
@@ -36,7 +37,6 @@ public class AlternativaDAO extends DatabaseConstants implements IDAO {
 	private static final String COLUMN_DESCRICAO = "DESCRICAO";
 	private static final String COLUMN_CORRETA = "CORRETA";
 	private static final String COLUMN_IDPERGUNTA_FK = "IDPERGUNTA_FK";
-	
 
 	public Map<String, Object> consultar(int id) {
 
@@ -67,39 +67,39 @@ public class AlternativaDAO extends DatabaseConstants implements IDAO {
 					lista.add(a);
 				}
 				resultado.put("lista", lista);
-				resultado.put("statusOperacao", "true");
+				resultado.put("statusOperacao", true);
 
 			} catch (Exception e) {
 				connection.rollback();
-				resultado.put("statusOperacao", "false");
-				
+				resultado.put("statusOperacao", false);
+
 			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			
+
 			try {
 				connection.rollback();
-				resultado.put("statusOperacao", "false");
-				
+				resultado.put("statusOperacao", false);
+
 			} catch (SQLException s) {
 				s.printStackTrace();
-				
+
 			}
-			
+
 		} finally {
 			if (statement != null) {
-				
+
 				try {
 					statement.close();
-					
+
 				} catch (SQLException s) {
 					s.printStackTrace();
-					
+
 				}
 			}
 		}
-		
+
 		return resultado;
 	}
 
@@ -123,43 +123,43 @@ public class AlternativaDAO extends DatabaseConstants implements IDAO {
 					a.setDescricao(rs.getString(COLUMN_DESCRICAO));
 					a.setCorreta(rs.getBoolean(COLUMN_CORRETA));
 					a.setPergunta(new Pergunta(rs.getInt(COLUMN_IDPERGUNTA_FK), null, 0, null, null, null, null, null));
-					
+
 					lista.add(a);
 				}
 				resultado.put("lista", lista);
 				resultado.put("statusOperacao", "true");
-				
+
 			} catch (Exception e) {
 				connection.rollback();
 				resultado.put("statusOperacao", "false");
-				
+
 			}
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
-			
+
 			try {
 				connection.rollback();
 				resultado.put("statusOperacao", "false");
-				
+
 			} catch (SQLException s) {
 				s.printStackTrace();
-				
+
 			}
-			
+
 		} finally {
 			if (statement != null) {
-				
+
 				try {
 					statement.close();
-					
+
 				} catch (SQLException s) {
 					s.printStackTrace();
-					
+
 				}
 			}
 		}
-		
+
 		return resultado;
 	}
 
@@ -171,66 +171,71 @@ public class AlternativaDAO extends DatabaseConstants implements IDAO {
 
 		for (int i = 0; i < objectTO.consultar().size(); i++) {
 
-			Alternativa a = (Alternativa) objectTO.consultar().get(i);
+			Desafio d = (Desafio) objectTO.consultar().get(i);
 
-			if (a instanceof Alternativa) {
+			if (d instanceof Desafio) {
 
-				try {
-					resultado = new HashMap<String, Object>();
+				for (int j = 0; j < d.getAlternativas().size(); j++) {
 
-					connection = ConnectionFactory.getConnection();
-					statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-
-					statement.setString(1, a.getDescricao());
-					statement.setBoolean(2, a.isCorreta());
-					statement.setInt(3, a.getPergunta().getId());
+					Alternativa a = (Alternativa) d.getAlternativas().get(j);
 
 					try {
-						statement.execute();
-						
-						int idPergunta = 0;
-						rs = statement.getGeneratedKeys();
-						
-						while(rs.next()) {
-							idPergunta = rs.getInt(1);
+						resultado = new HashMap<String, Object>();
+
+						connection = ConnectionFactory.getConnection();
+						statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+
+						statement.setString(1, a.getDescricao());
+						statement.setBoolean(2, a.isCorreta());
+						statement.setInt(3, a.getPergunta().getId());
+
+						try {
+							statement.execute();
+
+							int idPergunta = 0;
+							rs = statement.getGeneratedKeys();
+
+							while (rs.next()) {
+								idPergunta = rs.getInt(1);
+							}
+
+							resultado.put("idPergunta", idPergunta);
+							resultado.put("statusOperacao", true);
+
+						} catch (Exception e) {
+							connection.rollback();
+							resultado.put("statusOperacao", false);
+
 						}
-						
-						resultado.put("idPergunta", idPergunta);
-						resultado.put("statusOperacao", "true");
 
 					} catch (Exception e) {
-						connection.rollback();
-						resultado.put("statusOperacao", "false");
-						
-					}
-					
-				} catch (Exception e) {
-					e.printStackTrace();
-					
-					try {
-						connection.rollback();
-						resultado.put("statusOperacao", "false");
-						
-					} catch (SQLException s) {
-						s.printStackTrace();
-						
-					}
-					
-				} finally {
-					if (statement != null) {
-						
+						e.printStackTrace();
+
 						try {
-							statement.close();
-							
+							connection.rollback();
+							resultado.put("statusOperacao", false);
+
 						} catch (SQLException s) {
 							s.printStackTrace();
-							
+
+						}
+
+					} finally {
+						if (statement != null) {
+
+							try {
+								statement.close();
+
+							} catch (SQLException s) {
+								s.printStackTrace();
+
+							}
 						}
 					}
 				}
 			}
 		}
-		
+
 		return resultado;
 	}
 
@@ -242,54 +247,59 @@ public class AlternativaDAO extends DatabaseConstants implements IDAO {
 
 		for (int i = 0; i < objectTO.consultar().size(); i++) {
 
-			Alternativa a = (Alternativa) objectTO.consultar().get(i);
+			Desafio d = (Desafio) objectTO.consultar().get(i);
 
-			if (a instanceof Alternativa) {
+			if (d instanceof Desafio) {
 
-				try {
-					resultado = new HashMap<String, Object>();
+				for (int j = 0; j < d.getAlternativas().size(); j++) {
 
-					connection = ConnectionFactory.getConnection();
-					statement = connection.prepareStatement(query);
-
-					statement.setString(1, a.getDescricao());
-					statement.setBoolean(2, a.isCorreta());
-					statement.setInt(3, a.getPergunta().getId());
-
-					statement.setInt(4, a.getId());
+					Alternativa a = (Alternativa) d.getAlternativas().get(j);
 
 					try {
-						statement.execute();
-						
-						resultado.put("statusOperacao", "true");
-						
-					} catch (Exception e) {
-						connection.rollback();
-						resultado.put("statusOperacao", "false");
-						
-					}
-					
-				} catch (Exception e) {
-					e.printStackTrace();
-					
-					try {
-						connection.rollback();
-						resultado.put("statusOperacao", "false");
-						
-					} catch (SQLException s) {
-						s.printStackTrace();
-						
-					}
-					
-				} finally {
-					if (statement != null) {
-						
+						resultado = new HashMap<String, Object>();
+
+						connection = ConnectionFactory.getConnection();
+						statement = connection.prepareStatement(query);
+
+						statement.setString(1, a.getDescricao());
+						statement.setBoolean(2, a.isCorreta());
+						statement.setInt(3, a.getPergunta().getId());
+
+						statement.setInt(4, a.getId());
+
 						try {
-							statement.close();
-							
+							statement.execute();
+
+							resultado.put("statusOperacao", true);
+
+						} catch (Exception e) {
+							connection.rollback();
+							resultado.put("statusOperacao", false);
+
+						}
+
+					} catch (Exception e) {
+						e.printStackTrace();
+
+						try {
+							connection.rollback();
+							resultado.put("statusOperacao", false);
+
 						} catch (SQLException s) {
 							s.printStackTrace();
-							
+
+						}
+
+					} finally {
+						if (statement != null) {
+
+							try {
+								statement.close();
+
+							} catch (SQLException s) {
+								s.printStackTrace();
+
+							}
 						}
 					}
 				}
@@ -304,47 +314,52 @@ public class AlternativaDAO extends DatabaseConstants implements IDAO {
 
 		for (int i = 0; i < objectTO.consultar().size(); i++) {
 
-			Alternativa a = (Alternativa) objectTO.consultar().get(i);
+			Desafio d = (Desafio) objectTO.consultar().get(i);
 
-			if (a instanceof Alternativa) {
+			if (d instanceof Desafio) {
 
-				try {
-					resultado = new HashMap<String, Object>();
-					
-					connection = ConnectionFactory.getConnection();
-					statement = connection.prepareStatement(query);
+				for (int j = 0; j < d.getAlternativas().size(); j++) {
 
-					statement.setInt(1, a.getId());
+					Alternativa a = d.getAlternativas().get(j);
 					
 					try {
-						statement.execute();
-						
-						resultado.put("statusOperacao", "true");
-						
-					} catch (Exception e) {
-						connection.rollback();
-						resultado.put("statusOperacao", "false");
-					}
-					
-				} catch (Exception e) {
-					e.printStackTrace();
-					
-					try {
-						connection.rollback();
-						resultado.put("statusOperacao", "false");
-						
-					} catch (SQLException s) {
-						s.printStackTrace();
-					}
-					
-				} finally {
-					if (statement != null) {
+						resultado = new HashMap<String, Object>();
+
+						connection = ConnectionFactory.getConnection();
+						statement = connection.prepareStatement(query);
+
+						statement.setInt(1, a.getId());
+
 						try {
-							statement.close();
-							
+							statement.execute();
+
+							resultado.put("statusOperacao", true);
+
+						} catch (Exception e) {
+							connection.rollback();
+							resultado.put("statusOperacao", false);
+						}
+
+					} catch (Exception e) {
+						e.printStackTrace();
+
+						try {
+							connection.rollback();
+							resultado.put("statusOperacao", false);
+
 						} catch (SQLException s) {
 							s.printStackTrace();
-							
+						}
+
+					} finally {
+						if (statement != null) {
+							try {
+								statement.close();
+
+							} catch (SQLException s) {
+								s.printStackTrace();
+
+							}
 						}
 					}
 				}

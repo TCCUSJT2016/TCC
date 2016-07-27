@@ -5,18 +5,32 @@ import java.util.ArrayList;
 
 public class Desafio implements Serializable
 {
+	
 	private static final long serialVersionUID = 1L;
 	
 	private int id;
 	private Candidato candidato;
+	private Pergunta pergunta;
 	private ArrayList<Alternativa> alternativas;
-	
+
+	public Desafio() {
+		alternativas = new ArrayList<Alternativa>();
+	}
+
 	public int getId() {
 		return id;
 	}
 	
 	public void setId(int id) {
 		this.id = id;
+	}
+	
+	public Pergunta getPergunta() {
+		return pergunta;
+	}
+	
+	public void setPergunta(Pergunta pergunta) {
+		this.pergunta = pergunta;
 	}
 	
 	public Candidato getCandidato() {

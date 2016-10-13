@@ -1,6 +1,8 @@
 package com.projeto.think.Facade.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.projeto.think.Facade.IManager;
 import com.projeto.think.Model.Alternativa;
@@ -8,6 +10,7 @@ import com.projeto.think.Model.Desafio;
 import com.projeto.think.Model.Pergunta;
 import com.projeto.think.Service.IService;
 import com.projeto.think.Service.impl.AlternativaService;
+import com.projeto.think.Service.impl.DesafioService;
 import com.projeto.think.Service.impl.PerguntaService;
 import com.projeto.think.TO.impl.DesafioTO;
 
@@ -83,20 +86,19 @@ public class DesafioManager implements IManager {
 	public Desafio consultar(Desafio desafio) {
 		Desafio desafioConsultado = new Desafio();
 				
-		int idPergunta = desafio.getPergunta().getId();
+//		int idPergunta = desafio.getPergunta().getId();
 		
-		Pergunta p = (Pergunta) perguntaService.consultarPorId(idPergunta).get("pergunta");
+//		Pergunta p = (Pergunta) perguntaService.consultarPorId(idPergunta).get("pergunta");
 		
 		// retorna todas as alternativas que pertencem a pergunta retornada acima
-		@SuppressWarnings("unchecked")
-		ArrayList<Alternativa> alternativas = (ArrayList<Alternativa>) alternativaService.consultarPorId(p.getId()).get("lista");
+//		@SuppressWarnings("unchecked")
+//		ArrayList<Alternativa> alternativas = (ArrayList<Alternativa>) alternativaService.consultarPorId(p.getId()).get("lista");
 		
-		desafioConsultado.setPergunta(p);
-		desafioConsultado.setAlternativas(alternativas);
+//		desafioConsultado.setPergunta(p);
+//		desafioConsultado.setAlternativas(alternativas);
 		
 		return desafioConsultado;
 	}
-	
 	
 	public DesafioTO consultarTodos() {
 		DesafioTO resultadoTO = new DesafioTO();
@@ -114,12 +116,23 @@ public class DesafioManager implements IManager {
 			@SuppressWarnings("unchecked")
 			ArrayList<Alternativa> alternativas = (ArrayList<Alternativa>) alternativaService.consultarPorId(p.getId()).get("lista");
 			
-			d.setPergunta(p);
+//			d.setPergunta(p);
 			d.setAlternativas(alternativas);
 			
 			totalPerguntas--;
 		}
 		
 		return resultadoTO;
+	}
+	
+	public Map<String, Object> aceitaDesafio(Desafio desafio) {
+
+		Map<String, Object> resultado = null;
+		
+		DesafioService ds = new DesafioService();
+		resultado = ds.aceitaDesafio(desafio);
+		
+		return resultado;
+		
 	}
 }

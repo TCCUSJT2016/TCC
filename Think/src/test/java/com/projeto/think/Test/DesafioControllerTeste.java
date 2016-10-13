@@ -1,15 +1,20 @@
 package com.projeto.think.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.sql.Time;
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.runner.Request;
+import org.springframework.http.HttpRequest;
 
 import com.projeto.think.Controller.DesafioController;
+import com.projeto.think.Facade.impl.DesafioManager;
 import com.projeto.think.Model.Alternativa;
 import com.projeto.think.Model.Area;
 import com.projeto.think.Model.Categoria;
@@ -49,7 +54,7 @@ public class DesafioControllerTeste {
 		alternativas.add(alternativa);
 		
 		Desafio desafio = new Desafio();
-		desafio.setPergunta(pergunta);
+//		desafio.setPergunta(pergunta);
 		desafio.setAlternativas(alternativas);
 		
 		String s = dc.cadastrar(desafio);
@@ -81,7 +86,7 @@ public class DesafioControllerTeste {
 		alternativas.add(alternativa);
 		
 		Desafio desafio = new Desafio();
-		desafio.setPergunta(pergunta);
+//		desafio.setPergunta(pergunta);
 		desafio.setAlternativas(alternativas);
 		
 		String s = dc.alterar(desafio);
@@ -103,7 +108,7 @@ public class DesafioControllerTeste {
 		alternativas.add(alternativa);
 		
 		Desafio desafio = new Desafio();
-		desafio.setPergunta(pergunta);
+//		desafio.setPergunta(pergunta);
 		desafio.setAlternativas(alternativas);
 		
 		String s = dc.excluir(desafio);
@@ -119,19 +124,34 @@ public class DesafioControllerTeste {
 		pergunta.setId(51);
 		
 		Desafio desafio = new Desafio();
-		desafio.setPergunta(pergunta);
+//		desafio.setPergunta(pergunta);
 		
 		String s = dc.consultar(desafio);
 		
 		assertEquals(s, "ConsultarDesafio");
 	}
 	
+	@Ignore
 	@Test
 	public void testeConsultarTodos() {
 		
 		String s = dc.consultar();
 		
 		assertEquals(s, "ConsultarTodosDesafios");
+		
+	}
+	
+	@Test
+	public void testeAceitaDesafio() {
+		boolean b = false;
+		
+		Desafio desafio = new Desafio();
+		desafio.setId(5);
+		
+		DesafioManager dm = new DesafioManager();
+		dm.aceitaDesafio(desafio);
+		
+		assertEquals(true, b);
 		
 	}
 }

@@ -44,7 +44,7 @@ public class ConnectionFactory
 		//return DriverManager.getConnection(
 				//"jdbc:" + code + "://" + host + "/" + database + "?user=" + user + "&password=" + password );
 		return DriverManager
-				.getConnection("jdbc:mysql://localhost:3306/TCC?user=root&password=root");
+				.getConnection("jdbc:mysql://localhost:3306/TCC?user=root&password=12345");
 	}
 	
 	public static void printURL()

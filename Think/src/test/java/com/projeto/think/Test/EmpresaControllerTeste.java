@@ -50,8 +50,8 @@ public class EmpresaControllerTeste {
 	{
 		Empresa empresa = new Empresa();
 
-		empresa.setId(10);
-		empresa.setNomeFantasia("Empresa Teste-A");
+		empresa.setId(12);
+		empresa.setNomeFantasia("Geek Trek");
 		empresa.setCnpj("44356052870-A");
 		empresa.setLogin("karin-A");
 		empresa.setSenha("123-A");
@@ -84,13 +84,12 @@ public class EmpresaControllerTeste {
 		assertEquals(s, "ExcluirEmpresa");
 	}
 	
-	@Ignore
 	@Test
 	public void testConsultarPorId() {
 		
 		Empresa empresa = new Empresa();
 
-		empresa.setId(10);
+		empresa.setId(12);
 		
 		String s = empresaController.consultar(empresa);
 		

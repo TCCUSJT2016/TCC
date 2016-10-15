@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 
 import org.springframework.stereotype.Component;
 
+import com.projeto.think.Common.Enum.PerfilEnum;
 import com.projeto.think.Facade.IManager;
 import com.projeto.think.Model.Candidato;
 import com.projeto.think.Model.Cargo;
@@ -15,6 +16,8 @@ import com.projeto.think.Model.Departamento;
 import com.projeto.think.Model.Empresa;
 import com.projeto.think.Model.NivelCandidato;
 import com.projeto.think.Service.impl.UsuarioService;
+import com.projeto.think.TO.impl.CandidatoTO;
+import com.projeto.think.TO.impl.EmpresaTO;
 import com.projeto.think.Service.impl.CandidatoService;
 import com.projeto.think.Service.impl.CargoService;
 import com.projeto.think.Service.impl.DepartamentoService;
@@ -165,6 +168,21 @@ public class CandidatoManager implements IManager
 	public boolean excluir(List<Object> object) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+	
+	public boolean alterarPerfil(int id, PerfilEnum perfil)
+	{
+		boolean statusAlteracao = false;
+		
+		Candidato model = new Candidato();
+		model.setId(id);
+		
+		CandidatoTO objectTO = new CandidatoTO();		
+		objectTO.adicionar(model);
+		
+		statusAlteracao = (Boolean) candidatoService.alterarPerfil(objectTO, perfil).get("statusOperacao");
+
+		return statusAlteracao;
 	}
 
 }
